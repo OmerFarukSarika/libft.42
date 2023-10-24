@@ -1,47 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osarikay <osarikay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 13:20:05 by osarikay          #+#    #+#             */
-/*   Updated: 2023/10/21 15:59:54 by osarikay         ###   ########.fr       */
+/*   Created: 2023/10/21 15:37:27 by osarikay          #+#    #+#             */
+/*   Updated: 2023/10/22 01:37:32 by osarikay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
 	unsigned int	i;
-	char			*final;
 
-	if (!s)
-		return (NULL);
-	i = 0;
-	final = (char *)malloc(ft_strlen(s) + 1);
-	if (!final)
-		return (NULL);
-	while (s[i])
+	if (s)
 	{
-		final[i] = f(i, s[i]);
-		i++;
+		i = 0;
+		while (s[i])
+		{
+			f(i, &s[i]);
+			i++;
+		}
 	}
-	final[i] = '\0';
-	return (final);
 }
 
-// char	ft_42(unsigned int a, char c)
+// #include <stdio.h>
+
+// void	ft_42(unsigned int x, char *c)
 // {
-// 	return (ft_tolower(c));
+// 	*c = ft_toupper(*c);
 // }
-
-// int	main(void)
+// int main()
 // {
-// 	char	s[] = "MeRhAbA";
-// 	char	*final;
-
-// 	final = ft_strmapi(s, ft_42);
-// 	printf("%s", final);
+// 	char str[] = "DENİZ";
+// 	ft_striteri(str, ft_42);
+// 	printf("%s", str);
 // }

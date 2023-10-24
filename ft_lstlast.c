@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osarikay <osarikay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 15:51:56 by osarikay          #+#    #+#             */
-/*   Updated: 2023/10/21 18:37:13 by osarikay         ###   ########.fr       */
+/*   Created: 2023/10/24 14:55:09 by osarikay          #+#    #+#             */
+/*   Updated: 2023/10/24 14:55:13 by osarikay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isdigit(int c)
+t_list	*ft_lstlast(t_list *lst)
 {
-	if (c >= 48 && c <= 57)
-	{
-		return (1);
-	}
-	return (0);
+	if (!lst)
+		return (0);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
-
-/*
-int main()
-{
-	printf("%d", ft_isdigit('1'));
-}
-*/

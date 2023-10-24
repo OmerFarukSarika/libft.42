@@ -5,43 +5,94 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: osarikay <osarikay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 12:37:39 by osarikay          #+#    #+#             */
-/*   Updated: 2023/10/19 14:25:15 by osarikay         ###   ########.fr       */
+/*   Created: 2023/10/11 14:07:19 by osarikay			#+#    #+#            */
+/*   Updated: 2023/10/20 17:26:43 by osarikay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_split(char const *s, char c)
+static int	count_words(const char *str, char c)
 {
-	size_t	i;
-	size_t	len;
-	char	*new;
-	size_t	j;
+	int	i;
+	int	trigger;
 
 	i = 0;
-	len = 0;
-	while (s[i])
+	trigger = 0;
+	while (*str)
 	{
-		while (s[i] != c)
-			len++;
-		i++;
-	}
-	new = (char *)malloc(len);
-	while (s[i])
-	{
-		while (s[i] != c)
+		if (*str != c && trigger == 0)
 		{
-			new[j] = s[i];
+			trigger = 1;
 			i++;
-			j++;
 		}
-		i++;
+		else if (*str == c)
+			trigger = 0;
+		str++;
 	}
-	return (new);
+	return (i);
 }
 
-int main(void)
+static void	free_arr(char **arr)
 {
-	printf("%s", ft_split("mustafa omer", " "));
+	char	**temp;
+
+	temp = arr;
+	while (*temp)
+	{
+		free(*temp);
+		temp++;
+	}
+	free(arr);
 }
+
+static size_t	get_len(const char *s, char c)
+{
+	if (!ft_strchr(s, c))
+		return (ft_strlen(s));
+	else
+		return (ft_strchr(s, c) - s);
+}
+
+char	**ft_split(const char *s, char c)
+{
+	char	**arr;
+	int		i;
+	size_t	len;
+
+	i = 0;
+	arr = (char **)malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!arr)
+		return (NULL);
+	while (*s)
+	{
+		while (*s == c && *s)
+			s++;
+		if (!*s)
+			break ;
+		len = get_len(s, c);
+		arr[i++] = ft_substr(s, 0, len);
+		if (!arr[i - 1])
+		{
+			free_arr(arr);
+			return (NULL);
+		}
+		s += len;
+	}
+	arr[i] = NULL;
+	return (arr);
+}
+
+// #include <stdio.h>
+
+//  int main()
+// {
+//  	char **str = ft_split("Ezgi Deniz Cakir",' ');
+//  	int i;
+//  	i = 0;
+//  	while(i < 3)
+//  	{
+//  	printf("%s\n",str[i]);
+// 	i++;
+//  	}
+// }
